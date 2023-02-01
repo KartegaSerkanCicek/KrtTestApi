@@ -1,13 +1,4 @@
-FROM mcr.microsoft.com/windows/servercore:1607 AS Build-env
-WORKDIR c:\App\
-
-COPY *.csproj .
-
-RUN dotnet restore
-
-COPY . ./
-RUN dotnet publish --no-restore -c Release -o out
-
-
-WORKDIR c:\inetpub\wwwroot\Api\"dotnet", "Api.dll"
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+WORKDIR /app
+COPY published/ c:\inetpub\wwwroot\Api
 ENTRYPOINT ["dotnet", "Api.dll"]
